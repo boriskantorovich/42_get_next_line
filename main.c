@@ -1,25 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dfisher <dfisher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/20 19:13:47 by dfisher           #+#    #+#             */
-/*   Updated: 2019/07/20 21:13:24 by dfisher          ###   ########.fr       */
+/*   Created: 2019/07/20 20:07:45 by dfisher           #+#    #+#             */
+/*   Updated: 2019/07/20 22:24:24 by dfisher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_GET_NEXT_LINE_H
-# define FT_GET_NEXT_LINE_H
-# define	BUFF_SIZE 100000
-# include "libft.h"
-/*exclude this includes for release */
-# include <fcntl.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
+#include "get_next_line.h"
 
-int	get_next_line(const int fd, char **line);
+/*
+** this is a test main function for gnl project. one should not submit
+** it to defense
+*/
 
-#endif
+int			main(int argc, char **argv)
+{
+	int		i;
+	int		fd;
+	char		*line;
+
+	if (argc == 2)
+	{
+		i = 0;
+		fd = open(argv[1], O_RDONLY);
+		while ((get_next_line(fd, &line)) == 1)
+		{
+			ft_putstr(line);
+			ft_putchar('\n');
+		}
+		close(fd);
+	}
+	return (0);
+}
