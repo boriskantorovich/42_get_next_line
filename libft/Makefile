@@ -6,14 +6,14 @@
 #    By: dfisher <dfisher@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/26 18:02:18 by dfisher           #+#    #+#              #
-#    Updated: 2019/07/20 13:46:36 by dfisher          ###   ########.fr        #
+#    Updated: 2019/07/21 19:42:32 by dfisher          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 CC = gcc
-CCFLAGS = -Wall -Werror -Wextra
-SRCS = ft_atoi.c \
+CFLAGS = -Wall -Wextra -Werror
+SRC_NAME = ft_atoi.c \
 		ft_bzero.c \
 		ft_isalnum.c \
 		ft_isalpha.c \
@@ -77,27 +77,24 @@ SRCS = ft_atoi.c \
 		ft_tolower.c \
 		ft_toupper.c \
 		ft_strset.c \
-		ft_strsplit_lst.c
-OBJ = ${SRCS:%.c=%.o}
-SRC = $(addprefix src/, $(SRCS))
-INCLUDES = includes/
-OPTIONS = -c $(SRC) -I $(INCLUDES)
+		ft_strsplit_lst.c \
+		ft_strndup.c
+OBJ_NAME = ${SRC_NAME:%.c=%.o}
+HEADER_DIR = .
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	ar rcs $(NAME) $(OBJ)
+$(NAME): $(OBJ_NAME)
+	ar rc $(NAME) $(OBJ_NAME)
 	ranlib $(NAME)
 
-$(OBJ): $(SRC)
-	$(CC) $(CCFLAGS) $(OPTIONS)
+$(OBJ_NAME):
+	$(CC)  $(CFLAGS) -c $(SRC_NAME) -I $(HEADER_DIR)
 
 clean:
-	rm -f $(OBJ)
+	rm -fv $(OBJ_NAME)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -fv $(NAME)
 
 re: fclean all
-
-.PHONY: clean fclean all re

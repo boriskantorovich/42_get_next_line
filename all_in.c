@@ -1,8 +1,7 @@
 #include <unistd.h>
 #include <stdlib.h>
-
-#define BUFF_SIZE	1
-#define ENDL		'\n'
+#include "get_next_line.h"
+#include "libft.h"
 
 int        line_copy(char **line, char *content, char c)
 {
@@ -81,24 +80,4 @@ int        get_next_line(const int fd, char **line)
     else
         tmp[0] = '\0';
     return (1);
-}
-
-int                main(int argc, char **argv)
-{
-    int            i;
-    int            fd;
-    char        *line;
-
-    if (argc == 2)
-    {
-        i = 0;
-        fd = open(argv[1], O_RDONLY);
-        while ((get_next_line(fd, &line)) == 1)
-        {
-            ft_putstr(line);
-            ft_putchar('\n');
-        }
-        close(fd);
-    }
-    return (0);
 }

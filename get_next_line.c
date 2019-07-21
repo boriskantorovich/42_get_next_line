@@ -6,57 +6,88 @@
 /*   By: dfisher <dfisher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 19:29:11 by dfisher           #+#    #+#             */
-/*   Updated: 2019/07/20 21:25:40 by dfisher          ###   ########.fr       */
+/*   Updated: 2019/07/21 20:01:21 by dfisher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "libft.h"
 
-t_list	*get_list(int fd, t_list **old)
+t_file	*ft_newfile(int fildes, t_file **head)
 {
-	t_list	*tmp;
+	t_file *new;
 
-	if (!old)
+	if (!(new = (t_file *)malloc(sizeof(t_file))))
 		return (NULL);
-	tmp = *old;
-	while (tmp)
-	{
-		if ((int)tmp->content_size == fd)
-			return (tmp);
-		tmp = tmp->next;
-	}
-	tmp = ft_lstnew("", fd);
-	ft_lstadd(old, tmp);
-	return (tmp);
+	new->content = "";
+	new->fildes = fildes;
+	new->next = *head;
+	return (new);
 }
 
-int	get_next_line(const int fd, char **line)
+t_file	*ft_makefile(int fildes, t_file **head)
 {
-	char buffer[BUFF_SIZE + 1];
-	static t_list	*old;
-	t_list	*list;
+	t_file	*checkpoint;
 
-	/* how to read from file */
-	if (fd < 0 || !line || !(list = get_list(fd, &old)))
-		return (-1);
-	//printf("# ");
-	if (read(fd, buffer, BUFF_SIZE) != sizeof(buffer))
-		printf("# Read errors\n");
-	size_t i = 0;
-	printf("%zu\n", sizeof(buffer));
-	while (i < sizeof(buffer))
+	if (!head)
+		return (NULL);
+	checkpoint = *head;
+	while (checkpoint)
 	{
-		if (buffer[i] == EOF)
-			break ;
-		printf("# %c", buffer[i]);
-		i++;
+		if (checkpoint->fildes == fildes)
+			return (checkpoint);
+		checkpoint = checkpoint->next;
 	}
-	line--;
-	if (1 && i)
-		return (1);
-	else if (1)
-		return (-1);
-	return (0);
+	checkpoint = ft_newfile(fildes, head);
+	return (checkpoint);
 }
 
+static int		ft_readln(int fildes, char *buffer, char **content)
+{
+	int	read_size;
 
+	while ((read_size = read(fildes, buffer, BUFF_SIZE)) > 0)
+		{
+			buffer[read_size] = '\0';
+			*content = ft_strjoin(*content, buffer);
+			if (ft_strchr(buffer, ENDL))
+				break ;
+		}
+	return (read_size);
+}
+
+/*
+** 1. If fd < 0 => error while open(const char *path,..)
+** 2. If line == NULL
+** 3.
+*/
+int		get_next_line(const int fd, char **line)
+{
+	char			buffer[BUFF_SIZE + 1];
+	static t_file	*head;
+	t_file			*current;
+	int				read_size;
+	char			*ptr_buf;
+	int				i;
+
+	printf("\nin gnl\n");
+	ptr_buf = buffer;
+	if (!line || fd < 0 || fd > MAX_FILDES || BUFF_SIZE < 1
+		|| (read(fd, buffer, 0)) < 0 || !(current = ft_makefile(fd, &head)))
+		return (-1);
+	read_size = ft_readln(fd, ptr_buf, &current->content);
+		printf("\n???		%d\n", read_size);
+	i = 0;
+	printf("\nso what happens\n");
+    while (current->content[i] && current->content[i] != ENDL)
+        i++;
+	*line = ft_strndup(current->content, i);
+	if (!read_size && !*current->content)
+	{
+		printf("\nAM i right?\n");
+		return (0);
+	}
+	if (1)
+		return (1);
+	return (1);
+}

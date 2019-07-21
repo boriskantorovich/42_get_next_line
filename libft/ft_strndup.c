@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dfisher <dfisher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/25 11:14:52 by dfisher           #+#    #+#             */
-/*   Updated: 2019/07/13 19:03:49 by dfisher          ###   ########.fr       */
+/*   Created: 2019/07/21 19:36:15 by dfisher           #+#    #+#             */
+/*   Updated: 2019/07/21 19:40:29 by dfisher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
-** The memchr() function locates the first occurrence of c (converted to an
-** unsigned char) in string s.
-*/
-
-void	*ft_memchr(const void *s, int c, size_t n)
+char	*ft_strndup(const char *s1, size_t n)
 {
-	unsigned char *s_uc;
-	unsigned char c_uc;
+	char			*s1_copy;
+	unsigned int	i;
 
-	s_uc = (unsigned char *)s;
-	c_uc = (unsigned char)c;
-	while (n--)
+	i = 0;
+	if (!(s1_copy = ft_strnew(n)))
+		return (NULL);
+	while (i < n)
 	{
-		if (*(s_uc++) == c_uc)
-			return ((void *)s);
-		s++;
+		s1_copy[i] = s1[i];
+		i++;
 	}
-	return (NULL);
+	return (s1_copy);
 }

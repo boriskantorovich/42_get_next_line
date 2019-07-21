@@ -6,19 +6,42 @@
 /*   By: dfisher <dfisher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 19:13:47 by dfisher           #+#    #+#             */
-/*   Updated: 2019/07/20 21:13:24 by dfisher          ###   ########.fr       */
+/*   Updated: 2019/07/21 19:51:27 by dfisher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_GET_NEXT_LINE_H
 # define FT_GET_NEXT_LINE_H
-# define	BUFF_SIZE 100000
-# include "libft.h"
-/*exclude this includes for release */
 # include <fcntl.h>
+# include "libft.h"
+/*
+** Get optimal buff_size running
+** $> diskutil info / | grep "Block Size"
+*/
+
+# define BUFF_SIZE (4096 - 1)
+# define ENDL '\n'
+/*exclude this includes for release */
+
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
+
+typedef struct	s_file
+{
+	char			*content;
+	int				fildes;
+	int				flag:1;
+	struct s_file	*next;
+}					t_file;
+
+/*
+** Get max value of filedescriptor running
+** $> launchctl limit maxfiles
+** in bash
+*/
+
+# define MAX_FILDES 256
 
 int	get_next_line(const int fd, char **line);
 
