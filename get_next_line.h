@@ -6,7 +6,7 @@
 /*   By: dfisher <dfisher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 19:13:47 by dfisher           #+#    #+#             */
-/*   Updated: 2019/07/21 19:51:27 by dfisher          ###   ########.fr       */
+/*   Updated: 2019/07/23 18:35:44 by dfisher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 ** $> diskutil info / | grep "Block Size"
 */
 
-# define BUFF_SIZE (4096 - 1)
+# define BUFF_SIZE 9999
 # define ENDL '\n'
 /*exclude this includes for release */
 

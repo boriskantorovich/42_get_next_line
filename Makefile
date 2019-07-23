@@ -6,7 +6,7 @@
 #    By: dfisher <dfisher@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/26 18:02:18 by dfisher           #+#    #+#              #
-#    Updated: 2019/07/21 20:05:09 by dfisher          ###   ########.fr        #
+#    Updated: 2019/07/23 17:11:31 by dfisher          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,6 @@ clean:
 	rm -fv $(OBJ_NAME)
 
 fclean: clean
-	rm -fv $(NAME)
+	rm -fv $(NAME) $(NAME_ALT)
 
-re: fclean all
+re: fclean all alt

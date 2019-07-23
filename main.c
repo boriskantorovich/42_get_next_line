@@ -6,7 +6,7 @@
 /*   By: dfisher <dfisher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 20:07:45 by dfisher           #+#    #+#             */
-/*   Updated: 2019/07/21 19:58:00 by dfisher          ###   ########.fr       */
+/*   Updated: 2019/07/23 19:48:46 by dfisher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,8 @@ int			main(int argc, char **argv)
 	{
 		fd = open(argv[1], O_RDONLY);
 		while ((get_next_line(fd, &line)) == 1)
-		{
-			printf("# hmm\n");
 			ft_putstr(line);
-			//ft_putchar('\n');
-		}
+		ft_putchar('\n');
 		close(fd);
 	}
 	/*

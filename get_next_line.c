@@ -1,93 +1,81 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dfisher <dfisher@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/20 19:29:11 by dfisher           #+#    #+#             */
-/*   Updated: 2019/07/21 20:01:21 by dfisher          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "get_next_line.h"
 #include "libft.h"
 
-t_file	*ft_newfile(int fildes, t_file **head)
+int        line_copy(char **line, char *content, char c)
 {
-	t_file *new;
+    int        i;
+    char    *tmp;
 
-	if (!(new = (t_file *)malloc(sizeof(t_file))))
-		return (NULL);
-	new->content = "";
-	new->fildes = fildes;
-	new->next = *head;
-	return (new);
-}
-
-t_file	*ft_makefile(int fildes, t_file **head)
-{
-	t_file	*checkpoint;
-
-	if (!head)
-		return (NULL);
-	checkpoint = *head;
-	while (checkpoint)
-	{
-		if (checkpoint->fildes == fildes)
-			return (checkpoint);
-		checkpoint = checkpoint->next;
-	}
-	checkpoint = ft_newfile(fildes, head);
-	return (checkpoint);
-}
-
-static int		ft_readln(int fildes, char *buffer, char **content)
-{
-	int	read_size;
-
-	while ((read_size = read(fildes, buffer, BUFF_SIZE)) > 0)
-		{
-			buffer[read_size] = '\0';
-			*content = ft_strjoin(*content, buffer);
-			if (ft_strchr(buffer, ENDL))
-				break ;
-		}
-	return (read_size);
-}
-
-/*
-** 1. If fd < 0 => error while open(const char *path,..)
-** 2. If line == NULL
-** 3.
-*/
-int		get_next_line(const int fd, char **line)
-{
-	char			buffer[BUFF_SIZE + 1];
-	static t_file	*head;
-	t_file			*current;
-	int				read_size;
-	char			*ptr_buf;
-	int				i;
-
-	printf("\nin gnl\n");
-	ptr_buf = buffer;
-	if (!line || fd < 0 || fd > MAX_FILDES || BUFF_SIZE < 1
-		|| (read(fd, buffer, 0)) < 0 || !(current = ft_makefile(fd, &head)))
-		return (-1);
-	read_size = ft_readln(fd, ptr_buf, &current->content);
-		printf("\n???		%d\n", read_size);
-	i = 0;
-	printf("\nso what happens\n");
-    while (current->content[i] && current->content[i] != ENDL)
+    i = 0;
+    tmp = *line;
+    while (content[i] && content[i] != c)
         i++;
-	*line = ft_strndup(current->content, i);
-	if (!read_size && !*current->content)
-	{
-		printf("\nAM i right?\n");
-		return (0);
-	}
-	if (1)
-		return (1);
-	return (1);
+    if (!(*line = ft_strndup(content, i)))
+        return (0);
+    return (i);
+}
+
+t_list    *get_live(int fd, t_list **hist)
+{
+    t_list    *tmp;
+
+    if (!hist)
+        return (NULL);
+    tmp = *hist;
+    while (tmp)
+    {
+        if ((int)tmp->content_size == fd)
+            return (tmp);
+        tmp = tmp->next;
+    }
+    tmp = ft_lstnew("", fd);
+    ft_lstadd(hist, tmp);
+    return (tmp);
+}
+
+int        my_read(const int fd, char **content)
+{
+    int        read_result;
+    char    *tmp;
+    char    buf[BUFF_SIZE + 1];
+
+    while ((read_result = read(fd, buf, BUFF_SIZE)))
+    {
+        buf[read_result] = '\0';
+        tmp = *content;
+        if (!(*content = ft_strjoin(*content, buf)))
+            return (-1);
+        free(tmp);
+        if (ft_strchr(buf, ENDL))
+            break ;
+    }
+    return (read_result);
+}
+
+int        get_next_line(const int fd, char **line)
+{
+    char            buf[BUFF_SIZE + 1];
+    size_t            read_result;
+    static t_list    *hist;
+    t_list            *live;
+    char            *tmp;
+
+    if (fd < 0 || !line || (read(fd, buf, 0)) < 0 ||
+            (!(live = get_live(fd, &hist))))
+        return (-1);
+    tmp = live->content;
+    read_result = my_read(fd, &tmp);
+    live->content = tmp;
+    if (!read_result && !*tmp)
+        return (0);
+    read_result = line_copy(line, live->content, ENDL);
+    tmp = live->content;
+    if (tmp[read_result] != '\0')
+    {
+        live->content = ft_strdup(&((live->content)[read_result + 1]));
+        free(tmp);
+    }
+    else
+        tmp[0] = '\0';
+    return (1);
 }
