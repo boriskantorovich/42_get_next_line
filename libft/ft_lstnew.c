@@ -6,7 +6,7 @@
 /*   By: dfisher <dfisher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 11:13:30 by dfisher           #+#    #+#             */
-/*   Updated: 2019/07/20 18:22:32 by dfisher          ###   ########.fr       */
+/*   Updated: 2019/07/23 20:33:42 by dfisher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_list	*ft_lstnew(void const *content, size_t content_size)
 			free(new);
 			return (NULL);
 		}
-		ft_memmove(new->content, content, content_size);
+		ft_memcpy(new->content, content, content_size);
 		new->content_size = content_size;
 	}
 	new->next = NULL;

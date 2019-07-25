@@ -6,7 +6,7 @@
 /*   By: dfisher <dfisher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 10:56:03 by dfisher           #+#    #+#             */
-/*   Updated: 2019/07/13 18:03:43 by dfisher          ###   ########.fr       */
+/*   Updated: 2019/07/23 20:27:38 by dfisher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 void	ft_lstdelone(t_list **alst, void (*del)(void *, size_t))
 {
-	if (alst && *alst)
+	if (alst && *alst && del)
 	{
 		del((*alst)->content, (*alst)->content_size);
 		free(*alst);

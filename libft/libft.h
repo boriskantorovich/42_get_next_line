@@ -6,7 +6,7 @@
 /*   By: dfisher <dfisher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 11:06:02 by dfisher           #+#    #+#             */
-/*   Updated: 2019/07/21 19:41:23 by dfisher          ###   ########.fr       */
+/*   Updated: 2019/07/20 13:50:11 by dfisher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ char				*ft_strsub(char const *s, unsigned int start, size_t len);
 char				*ft_strtrim(char const *s);
 int					ft_tolower(int c);
 int					ft_toupper(int c);
-char				*ft_strndup(const char *s1, size_t n);
 
 typedef struct		s_list
 {

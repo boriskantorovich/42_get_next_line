@@ -6,7 +6,7 @@
 /*   By: dfisher <dfisher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 11:09:10 by dfisher           #+#    #+#             */
-/*   Updated: 2019/07/21 19:38:58 by dfisher          ###   ########.fr       */
+/*   Updated: 2019/07/13 19:15:10 by dfisher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,13 @@ char	*ft_strdup(const char *s1)
 
 	i = 0;
 	len = ft_strlen(s1) + 1;
-	if (!(s1_copy = ft_strnew(len)))
+	if (!(s1_copy = (char *)malloc(len * sizeof(char))))
 		return (NULL);
 	while (s1[i] != '\0')
 	{
 		s1_copy[i] = s1[i];
 		i++;
 	}
+	s1_copy[i] = '\0';
 	return (s1_copy);
 }

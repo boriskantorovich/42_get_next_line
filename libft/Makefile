@@ -6,7 +6,7 @@
 #    By: dfisher <dfisher@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/26 18:02:18 by dfisher           #+#    #+#              #
-#    Updated: 2019/07/21 19:42:32 by dfisher          ###   ########.fr        #
+#    Updated: 2019/07/23 19:38:41 by dfisher          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,8 +77,7 @@ SRC_NAME = ft_atoi.c \
 		ft_tolower.c \
 		ft_toupper.c \
 		ft_strset.c \
-		ft_strsplit_lst.c \
-		ft_strndup.c
+		ft_strsplit_lst.c
 OBJ_NAME = ${SRC_NAME:%.c=%.o}
 HEADER_DIR = .
 
@@ -88,8 +87,8 @@ $(NAME): $(OBJ_NAME)
 	ar rc $(NAME) $(OBJ_NAME)
 	ranlib $(NAME)
 
-$(OBJ_NAME):
-	$(CC)  $(CFLAGS) -c $(SRC_NAME) -I $(HEADER_DIR)
+%.o: %.c
+	$(CC)  $(CFLAGS) -c -I $(HEADER_DIR) $<
 
 clean:
 	rm -fv $(OBJ_NAME)
@@ -98,3 +97,6 @@ fclean: clean
 	rm -fv $(NAME)
 
 re: fclean all
+
+norme:
+	norminette
