@@ -6,12 +6,11 @@
 /*   By: dfisher <dfisher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 21:30:26 by dfisher           #+#    #+#             */
-/*   Updated: 2019/07/25 21:43:28 by dfisher          ###   ########.fr       */
+/*   Updated: 2019/07/25 22:40:07 by dfisher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include "libft.h"
 
 t_list	*check_content(int fd, t_list **list)
 {
@@ -63,7 +62,7 @@ ssize_t	read_fd(int fd, char **content, char buffer[BUFF_SIZE + 1])
 	return (read_size);
 }
 
-int		get_next_line(const int fd, char **line)
+int		get_next_line_core(const int fd, char **line, int flags, ...)
 {
 	char			buffer[BUFF_SIZE + 1];
 	static t_list	*head;
@@ -71,6 +70,8 @@ int		get_next_line(const int fd, char **line)
 	char			*tmp;
 	ssize_t			read_size;
 
+	if (flags > 0)
+		flags = 1;
 	if (fd < 0 || fd > MAX_FILDES || !line || read(fd, buffer, 0) < 0 ||\
 	!(current = check_content(fd, &head)))
 		return (-1);
@@ -89,4 +90,9 @@ int		get_next_line(const int fd, char **line)
 	else
 		tmp[0] = '\0';
 	return (1);
+}
+
+int		get_next_line(const int fd, char **line)
+{
+	return (get_next_line_core(fd, line, G_CHRS, 1, '\n'));
 }
