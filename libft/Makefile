@@ -6,7 +6,7 @@
 #    By: dfisher <dfisher@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/26 18:02:18 by dfisher           #+#    #+#              #
-#    Updated: 2019/07/23 19:38:41 by dfisher          ###   ########.fr        #
+#    Updated: 2019/07/25 21:57:53 by dfisher          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,7 +77,8 @@ SRC_NAME = ft_atoi.c \
 		ft_tolower.c \
 		ft_toupper.c \
 		ft_strset.c \
-		ft_strsplit_lst.c
+		ft_strsplit_lst.c \
+		ft_strndup.c
 OBJ_NAME = ${SRC_NAME:%.c=%.o}
 HEADER_DIR = .
 
