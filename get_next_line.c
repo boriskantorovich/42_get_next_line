@@ -6,7 +6,7 @@
 /*   By: dfisher <dfisher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 21:30:26 by dfisher           #+#    #+#             */
-/*   Updated: 2019/07/25 22:40:07 by dfisher          ###   ########.fr       */
+/*   Updated: 2019/07/25 22:53:53 by dfisher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int		get_next_line_core(const int fd, char **line, int flags, ...)
 	ssize_t			read_size;
 
 	if (flags > 0)
-		flags = 1;
+		printf("\n%d\n", flags);
 	if (fd < 0 || fd > MAX_FILDES || !line || read(fd, buffer, 0) < 0 ||\
 	!(current = check_content(fd, &head)))
 		return (-1);
@@ -94,5 +94,5 @@ int		get_next_line_core(const int fd, char **line, int flags, ...)
 
 int		get_next_line(const int fd, char **line)
 {
-	return (get_next_line_core(fd, line, G_CHRS, 1, '\n'));
+	return (get_next_line_core(fd, line, G_GREP, 5, '\n'));
 }
