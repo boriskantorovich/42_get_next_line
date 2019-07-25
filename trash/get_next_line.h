@@ -6,7 +6,7 @@
 /*   By: dfisher <dfisher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 19:13:47 by dfisher           #+#    #+#             */
-/*   Updated: 2019/07/25 21:29:24 by dfisher          ###   ########.fr       */
+/*   Updated: 2019/07/25 21:25:56 by dfisher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define FT_GET_NEXT_LINE_H
 # include <fcntl.h>
 # include "libft.h"
-
 /*
 ** Get optimal buff_size running
 ** $> diskutil info / | grep "Block Size"
@@ -22,16 +21,13 @@
 
 # define BUFF_SIZE 9999
 # define ENDL '\n'
-
-/*
-** exclude this includes for release
-*/
+/*exclude this includes for release */
 
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
 
-typedef struct		s_file
+typedef struct	s_file
 {
 	char			*content;
 	int				fildes;

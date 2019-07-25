@@ -1,81 +1,92 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dfisher <dfisher@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/07/25 21:30:26 by dfisher           #+#    #+#             */
+/*   Updated: 2019/07/25 21:43:28 by dfisher          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 #include "libft.h"
 
-int        line_copy(char **line, char *content, char c)
+t_list	*check_content(int fd, t_list **list)
 {
-    int        i;
-    char    *tmp;
+	t_list	*tmp;
 
-    i = 0;
-    tmp = *line;
-    while (content[i] && content[i] != c)
-        i++;
-    if (!(*line = ft_strndup(content, i)))
-        return (0);
-    return (i);
+	if (!list)
+		return (NULL);
+	tmp = *list;
+	while (tmp)
+	{
+		if ((int)tmp->content_size == fd)
+			return (tmp);
+		tmp = tmp->next;
+	}
+	tmp = ft_lstnew("", fd);
+	ft_lstadd(list, tmp);
+	return (tmp);
 }
 
-t_list    *get_live(int fd, t_list **hist)
+int		line_copy(char **line, char *content, char c)
 {
-    t_list    *tmp;
+	int		i;
+	char	*tmp;
 
-    if (!hist)
-        return (NULL);
-    tmp = *hist;
-    while (tmp)
-    {
-        if ((int)tmp->content_size == fd)
-            return (tmp);
-        tmp = tmp->next;
-    }
-    tmp = ft_lstnew("", fd);
-    ft_lstadd(hist, tmp);
-    return (tmp);
+	i = 0;
+	tmp = *line;
+	while (content[i] && content[i] != c)
+		i++;
+	if (!(*line = ft_strndup(content, i)))
+		return (0);
+	return (i);
 }
 
-int        my_read(const int fd, char **content)
+ssize_t	read_fd(int fd, char **content, char buffer[BUFF_SIZE + 1])
 {
-    int        read_result;
-    char    *tmp;
-    char    buf[BUFF_SIZE + 1];
+	ssize_t read_size;
+	char	*tmp;
 
-    while ((read_result = read(fd, buf, BUFF_SIZE)))
-    {
-        buf[read_result] = '\0';
-        tmp = *content;
-        if (!(*content = ft_strjoin(*content, buf)))
-            return (-1);
-        free(tmp);
-        if (ft_strchr(buf, ENDL))
-            break ;
-    }
-    return (read_result);
+	while ((read_size = read(fd, buffer, BUFF_SIZE)) > 0)
+	{
+		buffer[read_size] = '\0';
+		tmp = *content;
+		if (!(*content = ft_strjoin(*content, buffer)))
+			return (-1);
+		free(tmp);
+		if (ft_strchr(buffer, ENDL))
+			break ;
+	}
+	return (read_size);
 }
 
-int        get_next_line(const int fd, char **line)
+int		get_next_line(const int fd, char **line)
 {
-    char            buf[BUFF_SIZE + 1];
-    size_t            read_result;
-    static t_list    *hist;
-    t_list            *live;
-    char            *tmp;
+	char			buffer[BUFF_SIZE + 1];
+	static t_list	*head;
+	t_list			*current;
+	char			*tmp;
+	ssize_t			read_size;
 
-    if (fd < 0 || !line || (read(fd, buf, 0)) < 0 ||
-            (!(live = get_live(fd, &hist))))
-        return (-1);
-    tmp = live->content;
-    read_result = my_read(fd, &tmp);
-    live->content = tmp;
-    if (!read_result && !*tmp)
-        return (0);
-    read_result = line_copy(line, live->content, ENDL);
-    tmp = live->content;
-    if (tmp[read_result] != '\0')
-    {
-        live->content = ft_strdup(&((live->content)[read_result + 1]));
-        free(tmp);
-    }
-    else
-        tmp[0] = '\0';
-    return (1);
+	if (fd < 0 || fd > MAX_FILDES || !line || read(fd, buffer, 0) < 0 ||\
+	!(current = check_content(fd, &head)))
+		return (-1);
+	tmp = current->content;
+	read_size = read_fd(fd, &tmp, buffer);
+	if (read_size <= 0 && !*tmp)
+		return (0);
+	current->content = tmp;
+	read_size = line_copy(line, current->content, ENDL);
+	tmp = current->content;
+	if (tmp[read_size] != '\0')
+	{
+		current->content = ft_strdup(&((current->content)[read_size + 1]));
+		free(tmp);
+	}
+	else
+		tmp[0] = '\0';
+	return (1);
 }
