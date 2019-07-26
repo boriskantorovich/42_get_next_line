@@ -6,7 +6,7 @@
 /*   By: dfisher <dfisher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 20:07:45 by dfisher           #+#    #+#             */
-/*   Updated: 2019/07/26 17:29:02 by dfisher          ###   ########.fr       */
+/*   Updated: 2019/07/26 19:33:44 by dfisher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,40 @@ void _simple_printf(const char* fmt, ...)
 ** this is a test main function for gnl project. one should not submit
 ** it to defense
 */
+/*
+int		ft_compare(char *content, char *str)
+{
+	int		i;
+	int		j;
 
+	i = 0;
+	while (content[i])
+	{
+		printf("\ncontent[i]?	%c\n", content[i]);
+		j = 0;
+		printf("\nstr[j]?		%c\n", str[j]);
+		while(content[i] && content[i] != str[j] && str[j])
+		{
+			printf("\n# str[j]?	%c\n", str[j]);
+			j++;
+		}
+		if (content[i] == str[j])
+		{
+			printf("\n# content[%c] == str[%c]\n", content[i],  str[j]);
+			return (i);
+		}
+		i++;
+	}
+	printf("%zu | %d\n", ft_strlen(content), i);
+	return (i);
+}
+*/
 int			main(int argc, char **argv)
 {
+	//char *content = "But a lovely\nHe shaved evenly and with care, \nephen said. I can’t wear them if they are grey.";
+	//char *str = "ya";
+
+	//ft_compare(content, str);
 	/*
 	simple_printf("dcff", 3, 'a', 1.999, 42.5);
 	_simple_printf("dcff", 3, 'a', 1.999, 42.5);
@@ -117,12 +148,7 @@ int			main(int argc, char **argv)
 		i = 0;
 		fd = open(argv[1], O_RDONLY);
 		while ((get_next_line(fd, &line)) == 1)
-		{
-			ft_putstr(line);
-			ft_putchar('\n');
-			ft_putchar('c');
-			ft_putchar('\n');
-		}
+			printf("%s\n", line);
 		close(fd);
 	}
 	return (0);
