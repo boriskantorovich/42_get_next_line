@@ -6,7 +6,7 @@
 /*   By: dfisher <dfisher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 20:07:45 by dfisher           #+#    #+#             */
-/*   Updated: 2019/07/26 19:33:44 by dfisher          ###   ########.fr       */
+/*   Updated: 2019/07/26 20:16:39 by dfisher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-/*
+
 #define _ft_va_arg_test(ap, t)	((ap) = (ap) + __ft_va_argsiz(t)),	*((t*) (void*) ((**ap) - __ft_va_argsiz(t))))
 
 void	print_ints(int num, ...)
@@ -79,13 +79,13 @@ void _simple_printf(const char* fmt, ...)
 
 	while (*fmt != '\0') {
 		if (*fmt == 'd') {
-			int i = *_ft_va_arg_test(test, int);
+			int i = ft_va_arg(test, int);
 			ft_putnbr(i);
             printf("!\n%d\n", i);
         } else if (*fmt == 'c') {
             // A 'char' variable will be promoted to 'int'
             // A character literal in C is already 'int' by itself
-            int c = _ft_va_arg_test(test, int);
+            int c = ft_va_arg(test, int);
             printf("%c\n", c);
         } else if (*fmt == 'f') {
             double d = ft_va_arg(args, double);
@@ -97,10 +97,6 @@ void _simple_printf(const char* fmt, ...)
     ft_va_end(args);
 }
 
-
-** this is a test main function for gnl project. one should not submit
-** it to defense
-*/
 /*
 int		ft_compare(char *content, char *str)
 {
@@ -135,10 +131,10 @@ int			main(int argc, char **argv)
 	//char *str = "ya";
 
 	//ft_compare(content, str);
-	/*
+
 	simple_printf("dcff", 3, 'a', 1.999, 42.5);
 	_simple_printf("dcff", 3, 'a', 1.999, 42.5);
-	print_ints(4, 2, 3, 100, -2190);*/
+/*
 	int		i;
 	int		fd;
 	char		*line;
@@ -152,4 +148,5 @@ int			main(int argc, char **argv)
 		close(fd);
 	}
 	return (0);
+	*/
 }
