@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: boriskantorovich <boriskantorovich@stud    +#+  +:+       +#+        */
+/*   By: dfisher <dfisher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 20:07:45 by dfisher           #+#    #+#             */
-/*   Updated: 2019/07/26 14:31:06 by boriskantor      ###   ########.fr       */
+/*   Updated: 2019/07/26 17:29:02 by dfisher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdarg.h>
 #include <stdio.h>
+
+/*
 #define _ft_va_arg_test(ap, t)	((ap) = (ap) + __ft_va_argsiz(t)),	*((t*) (void*) ((**ap) - __ft_va_argsiz(t))))
 
 void	print_ints(int num, ...)
@@ -74,7 +76,7 @@ void _simple_printf(const char* fmt, ...)
 	_ft_va_start_test(&test, fmt);
 	printf("HMM HMM HMMM %s HMMM HMMM HMMM\n" , *test);
 
-	
+
 	while (*fmt != '\0') {
 		if (*fmt == 'd') {
 			int i = *_ft_va_arg_test(test, int);
@@ -95,16 +97,17 @@ void _simple_printf(const char* fmt, ...)
     ft_va_end(args);
 }
 
-/*
+
 ** this is a test main function for gnl project. one should not submit
 ** it to defense
 */
 
 int			main(int argc, char **argv)
 {
-	simple_printf("dcff", 3, 'a', 1.999, 42.5); 
-	_simple_printf("dcff", 3, 'a', 1.999, 42.5); 
-	print_ints(4, 2, 3, 100, -2190);
+	/*
+	simple_printf("dcff", 3, 'a', 1.999, 42.5);
+	_simple_printf("dcff", 3, 'a', 1.999, 42.5);
+	print_ints(4, 2, 3, 100, -2190);*/
 	int		i;
 	int		fd;
 	char		*line;
@@ -116,6 +119,8 @@ int			main(int argc, char **argv)
 		while ((get_next_line(fd, &line)) == 1)
 		{
 			ft_putstr(line);
+			ft_putchar('\n');
+			ft_putchar('c');
 			ft_putchar('\n');
 		}
 		close(fd);
