@@ -6,13 +6,14 @@
 /*   By: boriskantorovich <boriskantorovich@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 20:07:45 by dfisher           #+#    #+#             */
-/*   Updated: 2019/07/26 10:05:38 by boriskantor      ###   ########.fr       */
+/*   Updated: 2019/07/26 14:31:06 by boriskantor      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdarg.h>
 #include <stdio.h>
+#define _ft_va_arg_test(ap, t)	((ap) = (ap) + __ft_va_argsiz(t)),	*((t*) (void*) ((**ap) - __ft_va_argsiz(t))))
 
 void	print_ints(int num, ...)
 {
@@ -55,19 +56,34 @@ void simple_printf(const char* fmt, ...)
     va_end(args);
 }
 
+size_t	___ft_va_argsiz_test(const char *t)
+{
+	return ((sizeof(t) + sizeof(int) - 1) / (sizeof(int) * sizeof(int)));
+}
+
+void	_ft_va_start_test(ft_va_list **ap, const char *pN)
+{
+	*ap = (ft_va_list *)&pN + ___ft_va_argsiz_test(pN);
+}
+
 void _simple_printf(const char* fmt, ...)
 {
 	ft_va_list args;
 	ft_va_start(args, fmt);
+	ft_va_list *test;
+	_ft_va_start_test(&test, fmt);
+	printf("HMM HMM HMMM %s HMMM HMMM HMMM\n" , *test);
 
+	
 	while (*fmt != '\0') {
 		if (*fmt == 'd') {
-			int i = ft_va_arg(args, int);
-            printf("%d\n", i);
+			int i = *_ft_va_arg_test(test, int);
+			ft_putnbr(i);
+            printf("!\n%d\n", i);
         } else if (*fmt == 'c') {
             // A 'char' variable will be promoted to 'int'
             // A character literal in C is already 'int' by itself
-            int c = ft_va_arg(args, int);
+            int c = _ft_va_arg_test(test, int);
             printf("%c\n", c);
         } else if (*fmt == 'f') {
             double d = ft_va_arg(args, double);
