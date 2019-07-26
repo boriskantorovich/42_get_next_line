@@ -6,7 +6,7 @@
 /*   By: dfisher <dfisher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/25 21:30:26 by dfisher           #+#    #+#             */
-/*   Updated: 2019/07/25 22:53:53 by dfisher          ###   ########.fr       */
+/*   Updated: 2019/07/26 17:54:37 by dfisher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,18 @@ int		get_next_line_core(const int fd, char **line, int flags, ...)
 	char			*tmp;
 	ssize_t			read_size;
 
-	if (flags > 0)
+	if (flags > 100)
 		printf("\n%d\n", flags);
 	if (fd < 0 || fd > MAX_FILDES || !line || read(fd, buffer, 0) < 0 ||\
 	!(current = check_content(fd, &head)))
 		return (-1);
 	tmp = current->content;
 	read_size = read_fd(fd, &tmp, buffer);
+	printf("\n++++++++TMP IS++++++++\n%s\n++++++++====++++++++\n", tmp);
 	if (read_size <= 0 && !*tmp)
 		return (0);
 	current->content = tmp;
-	read_size = line_copy(line, current->content, ENDL);
+	read_size = line_copy(line, current->content, 'a');
 	tmp = current->content;
 	if (tmp[read_size] != '\0')
 	{

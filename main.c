@@ -6,7 +6,7 @@
 /*   By: dfisher <dfisher@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 20:07:45 by dfisher           #+#    #+#             */
-/*   Updated: 2019/07/25 23:49:59 by dfisher          ###   ########.fr       */
+/*   Updated: 2019/07/26 17:50:18 by dfisher          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
+#include "get_next_line.h"
 
 void simple_printf(const char* fmt, ...)
 {
@@ -129,8 +130,8 @@ void		print_ints(int nums, ...)
 	ft_va_end(args);
 }
 */
-int			main(void)
-{
+int			main(int argc, char **argv)
+{/*
 	ft_print_ints(5, NULL);
 	simple_printf("dcff", 3, 'a', 1.999, 42.5);
   char * res;
@@ -139,18 +140,19 @@ int			main(void)
   printf("%s\n", *output);
 	//ft_print_ints(10);
 	//int i = ft_add(1, 2, 3);
-	//printf("%d", i);
-/*	int		fd;
+	//printf("%d", i);*/
+int		fd;
 	char	*line;
 
 	if (argc == 2)
 	{
 		fd = open(argv[1], O_RDONLY);
 		while ((get_next_line(fd, &line)) == 1)
-			ft_putstr(line);
-		ft_putchar('\n');
+			printf("\n++++++++LINE IS++++++++\n%s\n++++++++****++++++++\n", line);
+			//ft_putstr(line);
+		//ft_putchar('\n');
 		close(fd);
-	}*/
+	}
 	/*
 	char		*line;
 	int			fd;
