@@ -3,19 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dfisher <dfisher@student.42.fr>            +#+  +:+       +#+        */
+/*   By: boriskantorovich <boriskantorovich@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 20:07:45 by dfisher           #+#    #+#             */
-/*   Updated: 2019/07/26 20:16:39 by dfisher          ###   ########.fr       */
+/*   Updated: 2019/07/27 10:47:58 by boriskantor      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdarg.h>
 #include <stdio.h>
-
-
-#define _ft_va_arg_test(ap, t)	((ap) = (ap) + __ft_va_argsiz(t)),	*((t*) (void*) ((**ap) - __ft_va_argsiz(t))))
+#define __ft_va_argsiz_test(t)	\
+	(((sizeof(t) + sizeof(int) - 1) / sizeof(int)) * sizeof(int))
+/*#define ft_va_arg_test(ap, t)					\
+	 (((ap) = (ap) + __ft_va_argsiz(t)),		\
+	  *((t*) (void*) ((ap) - __ft_va_argsiz(t)))) */
 
 void	print_ints(int num, ...)
 {
@@ -57,24 +59,30 @@ void simple_printf(const char* fmt, ...)
 
     va_end(args);
 }
-
+/* 
 size_t	___ft_va_argsiz_test(const char *t)
 {
 	return ((sizeof(t) + sizeof(int) - 1) / (sizeof(int) * sizeof(int)));
-}
-
-void	_ft_va_start_test(ft_va_list **ap, const char *pN)
+}*/
+/*
+void	_ft_va_start_test(ft_va_list ap, const char *pN)
 {
-	*ap = (ft_va_list *)&pN + ___ft_va_argsiz_test(pN);
-}
+	ap = (ft_va_list)&pN + __ft_va_argsiz_test(pN);
+	printf("# %c	%d		& %p	%s\n", *pN, *pN, &pN, pN);
+	printf("# %c	%d	& %p\n", (char)*ap, (int)*ap, &ap);
+	printf("# %zu\n", __ft_va_argsiz_test(pN));
+} */
 
 void _simple_printf(const char* fmt, ...)
 {
 	ft_va_list args;
 	ft_va_start(args, fmt);
-	ft_va_list *test;
-	_ft_va_start_test(&test, fmt);
-	printf("HMM HMM HMMM %s HMMM HMMM HMMM\n" , *test);
+	char *test;
+	test = (char *)&fmt + __ft_va_argsiz_test(fmt);
+	printf("# %c	%d	& %p	%s\n", *fmt, *fmt, &fmt, fmt);
+	printf("# %c	%d	& %p	%p\n", (char)*test, (int)*test, &test, &test - __ft_va_argsiz_test(fmt));
+	printf("# %zu\n", __ft_va_argsiz_test(fmt));
+	printf("HMM HMM HMMM %s HMMM HMMM HMMM\n" , test);
 
 
 	while (*fmt != '\0') {
@@ -125,7 +133,7 @@ int		ft_compare(char *content, char *str)
 	return (i);
 }
 */
-int			main(int argc, char **argv)
+int			main(void)//int argc, char **argv)
 {
 	//char *content = "But a lovely\nHe shaved evenly and with care, \nephen said. I can’t wear them if they are grey.";
 	//char *str = "ya";
